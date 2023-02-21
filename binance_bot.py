@@ -38,8 +38,8 @@ def get_latest_price():
 
 def main():
     """Основная логика работы."""
-    print('========Начало работы========')
-    print('------------Date--------------Price--------')
+    print('==================Начало работы==================')
+    print('№---------------Date--------------Price----------')
     price_history = []
     while True:
         try:
@@ -47,7 +47,7 @@ def main():
             date = datetime.now()
             price_history.append(float(price))
 
-            print(len(price_history), date, price)
+            print(len(price_history), date, price, sep=' || ')
             if len(price_history) == 360:
                 if price_history[-1] == max(price_history) * 0.99:
                     print(
@@ -75,4 +75,7 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print('Принудительное завершение программы')
