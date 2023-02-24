@@ -16,7 +16,7 @@ pip install -r requirements.txt
 ```
 Запустить проект:
 ```
-python binance_bot.py
+python binance_parse.py
 ```
 
 ## :office_worker: Об авторe: 
