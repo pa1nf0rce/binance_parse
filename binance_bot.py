@@ -48,23 +48,29 @@ def main():
             price_history.append(float(price))
 
             print(len(price_history), date, price, sep=' || ')
-            if len(price_history) == 360:
-                if price_history[-1] == max(price_history) * 0.99:
+            if len(price_history) ==2:
+                if price_history[-1] < max(price_history) * 0.99:
+                    diff = (abs(max(price_history) - price_history[-1]) / price_history[-1]) * 100.0
                     print(
-                    'Цена упала на 1% от максимальной цены за час',
-                    f'макс. цена {max(price_history)}, текущая -- {price_history[-1]}',  
+                    f'Цена упала на {diff}% от максимальной цены за час',
+                    f'макс. цена {max(price_history)}, текущая -- {price_history[-1]}', 
+                    f'разница {round(diff, 3)}%' 
                     )
                     price_history = []
-                elif price_history[-1] == max(price_history) * 1.01:
+                elif price_history[-1] > max(price_history) * 1.01:
+                    diff = (abs(max(price_history) - price_history[-1]) / price_history[-1]) * 100.0
                     print(
                     'Цена увеличилась на 1% от максимальной цены за час',
-                    f'макс. цена {max(price_history)}, текущая -- {price_history[-1]}',  
+                    f'макс. цена {max(price_history)}, текущая -- {price_history[-1]}',
+                    f'разница {round(diff, 3)}%'
                     )
                     price_history = []
                 else:
+                    diff = (abs(max(price_history) - price_history[-1]) / price_history[-1]) * 100.0
                     print(
                         f'Максимальная цена за последний час {max(price_history)} ',
-                        f'текущая -- {price_history[-1]}'
+                        f'текущая -- {price_history[-1]} '
+                        f'разница {round(diff, 3)}%'
                     )
                     price_history = []
         except Exception as error:
