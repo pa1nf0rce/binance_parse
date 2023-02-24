@@ -54,15 +54,13 @@ def main():
                     print(
                     f'Цена упала на {diff}% от максимальной цены за час',
                     f'макс. цена {max(price_history)}, текущая -- {price_history[-1]}', 
-                    f'разница {round(diff, 3)}%' 
                     )
                     price_history = []
                 elif price_history[-1] > max(price_history) * 1.01:
                     diff = (abs(max(price_history) - price_history[-1]) / price_history[-1]) * 100.0
                     print(
-                    'Цена увеличилась на 1% от максимальной цены за час',
+                    f'Цена увеличилась на {diff}% от максимальной цены за час',
                     f'макс. цена {max(price_history)}, текущая -- {price_history[-1]}',
-                    f'разница {round(diff, 3)}%'
                     )
                     price_history = []
                 else:
