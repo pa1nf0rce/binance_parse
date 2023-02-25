@@ -48,7 +48,7 @@ def main():
             price_history.append(float(price))
 
             print(len(price_history), date, price, sep=' || ')
-            if len(price_history) ==2:
+            if len(price_history) == 360:
                 if price_history[-1] < max(price_history) * 0.99:
                     diff = (abs(max(price_history) - price_history[-1]) / price_history[-1]) * 100.0
                     print(
