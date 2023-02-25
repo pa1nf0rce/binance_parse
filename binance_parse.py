@@ -23,7 +23,7 @@ def get_latest_price():
             )
             raise exceptions.HTTPStatusNotOK(error_message)
         price_eth_usdt = response.json()['price']
-    except requests.exceptions.RequestException as error_message:
+    except exceptions.RequestException as error_message:
         raise exceptions.UnexpectedError(
             f'Запрос c параметрами {ENDPOINT}',
             f'завершился ошибкой({error_message})'
@@ -39,7 +39,7 @@ def get_latest_price():
 def main():
     """Основная логика работы."""
     print('==================Начало работы==================')
-    print('№---------------Date--------------Price----------')
+    print('№---------------Date----------------Price----------')
     price_history = []
     while True:
         try:

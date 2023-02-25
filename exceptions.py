@@ -16,3 +16,6 @@ class UnexpectedError(Exception):
 
 class ReturnedCryptoPriceIsEmpty(Exception):
     """Пустое значение 'price'."""
+
+class RequestException(Exception):
+    """Запрос завершился ошибкой."""
