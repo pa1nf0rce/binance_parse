@@ -1,7 +1,7 @@
 
 import json
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 from http import HTTPStatus
 
 import requests
@@ -36,39 +36,45 @@ def main():
     print('==================Начало работы==================')
     print('№---------------Date----------------Price----------')
     price_history = []
+    start_date = datetime.now()
+    delta = timedelta(minutes=1)
     while True:
         try:
             price = get_latest_price()
             date = datetime.now()
             price_history.append(float(price))
-
-            print(len(price_history), date, price, sep=' || ')
-            if len(price_history) == 360:
-                if price_history[-1] < max(price_history) * 0.99:
-                    diff = (abs(max(price_history) - price_history[-1]) / price_history[-1]) * 100.0
+            print(len(price_history), date, price, sep=" || ")
+            if date - start_date >= delta:
+                max_price = max(price_history)
+                if price_history[-1] <= max_price * 0.99:
+                    diff = (
+                        abs(max_price - price_history[-1]) / price_history[-1]
+                    ) * 100.0
                     print(
                     f'Цена упала на {diff}% от максимальной цены за час',
-                    f'макс. цена {max(price_history)}, текущая -- {price_history[-1]}', 
+                    f'макс. цена {max_price}, текущая - {price_history[-1]}', 
                     )
+                    start_date = datetime.now()
                     price_history = []
-                elif price_history[-1] > max(price_history) * 1.01:
-                    diff = (abs(max(price_history) - price_history[-1]) / price_history[-1]) * 100.0
+                elif price_history[-1] >= max_price * 1.01:
+                    diff = (abs(max_price - price_history[-1]) / price_history[-1]) * 100.0
                     print(
                     f'Цена увеличилась на {diff}% от максимальной цены за час',
-                    f'макс. цена {max(price_history)}, текущая -- {price_history[-1]}',
+                    f'макс. цена {max_price}, текущая -- {price_history[-1]}',
                     )
+                    start_date = datetime.now()
                     price_history = []
                 else:
-                    diff = (abs(max(price_history) - price_history[-1]) / price_history[-1]) * 100.0
+                    diff = (abs(max_price - price_history[-1]) / price_history[-1]) * 100.0
                     print(
-                        f'Максимальная цена за последний час {max(price_history)} ',
+                        f'Максимальная цена за последний час {max_price} ',
                         f'текущая -- {price_history[-1]} '
                         f'разница {round(diff, 3)}%'
                     )
+                    start_date = datetime.now()
                     price_history = []
         except Exception as error:
-                message = f'Сбой в работе программы: {error}'
-                print(message)
+                print(f'Сбой в работе программы: {error}')
         finally:
             time.sleep(RETRY_TIME)
 
