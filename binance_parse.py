@@ -8,7 +8,7 @@ import requests
 
 import exceptions
 
-RETRY_TIME = 10
+RETRY_TIME = 5
 ENDPOINT = 'https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT'
 
 
